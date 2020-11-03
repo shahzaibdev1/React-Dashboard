@@ -9,19 +9,20 @@ import FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
 ReactFC.fcRoot(FusionCharts, Column2D, FusionTheme);
 
 function DoughnutWidget(props) {
+  let bgColor = props.isLight ? "#fafafa" : "#2a2a2a";
+
   // Create a JSON object to store the chart configurations
   const chartConfigs = {
     title: props.title,
     type: "doughnut2d", // The chart type
     width: "100%", // Width of the chart
-    height: "300", // Height of the chart
+    height: "200", // Height of the chart
     dataFormat: "json", // Data type
     dataSource: {
       // Chart Configuration
       chart: {
-        bgColor: "#2a2a2a",
-        xAxisName: "Country", //Set the x-axis name
-        yAxisName: "Reserves (MMbbl)", //Set the y-axis name
+        bgColor,
+        caption: props.title,
         numberSuffix: "K",
         theme: "fusion", //Set the theme for your chart
       },

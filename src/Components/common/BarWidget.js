@@ -10,18 +10,21 @@ ReactFC.fcRoot(FusionCharts, Column2D, FusionTheme);
 
 function BarWidget(props) {
   // Create a JSON object to store the chart configurations
+  let bgColor = props.isLight ? "#fafafa" : "#2a2a2a";
+
   const chartConfigs = {
     title: props.title,
     type: "bar2d", // The chart type
     width: "100%", // Width of the chart
-    height: "300", // Height of the chart
+    height: "150", // Height of the chart
     dataFormat: "json", // Data type
+
     dataSource: {
       // Chart Configuration
       chart: {
-        bgColor: "#2a2a2a",
-        xAxisName: "Country", //Set the x-axis name
-        yAxisName: "Reserves (MMbbl)", //Set the y-axis name
+        bgColor,
+        xAxisName: props.x, //Set the x-axis name
+        yAxisName: props.y, //Set the y-axis name
         numberSuffix: "K",
         theme: "fusion", //Set the theme for your chart
       },

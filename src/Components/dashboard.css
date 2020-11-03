@@ -2,12 +2,28 @@
 
 body {
   font-family: "Nunito", sans-serif;
-  background-color: #212121;
   color: white;
 }
 
-.widget-wrap {
+.bg-lighter {
+  background-color: #f1f2f3;
+}
+
+.bg-darker {
+  background-color: #212121;
+}
+
+.widget-bg-light {
+  background-color: #fafafa;
+}
+
+.widget-bg-dark {
   background-color: #2a2a2a;
+}
+
+.widget-wrap {
+  border-radius: 8px;
+  margin-bottom: 10px;
 }
 
 .widget-title {
@@ -29,5 +45,18 @@ body {
 }
 
 text {
-  fill: white;
+  fill: rgb(90, 90, 90);
+}
+
+.border-dashed {
+  border: 1px dashed #3b3f5c;
+}
+
+.widget-txt {
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.widget-detail {
+  width: 20%;
 }

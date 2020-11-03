@@ -6,9 +6,12 @@ import BarWidget from "./common/BarWidget";
 import DoughnutWidget from "./common/DoughnutWidget";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./dashboard.css";
 import { Col, Container, Row } from "react-bootstrap";
+import SplineWidget from "./common/SplineWidget";
+import SimpleDataWidget from "./common/SimpleDataWidget";
+import PieWidget from "./common/PieWidget";
+import FunnelWidget from "./common/AreaWidget";
 
 const config = {
   apiKey: "AIzaSyDMu-Vw30ykPPmFT3cXeunzKEi4EahzglI",
@@ -31,8 +34,13 @@ export class Dashboard extends Component {
       newUsers: null,
       sourceArr: [],
       usersArr: [],
-      theme: "",
-      isLight: false,
+      currentMonth: null,
+      sessions: [],
+      numOfSessionsPerUser: null,
+      pagePerSession: null,
+      avgSessionTime: null,
+      bounceRate: null,
+      sessionDataArr: [],
     };
   }
 
@@ -48,8 +56,18 @@ export class Dashboard extends Component {
     let sourceArr = [];
     let usersArr = [];
     let selectedValue = null;
+    let currentMonth = null;
+    let sessions = [];
+    let numOfSessionsPerUser = null;
+    let pagePerSession = null;
+    let avgSessionTime = null;
+    let bounceRate = null;
+    let sessionDataArr = [];
 
     arr.map((data) => {
+      usersArr.push({ label: data.month, value: data.new_users });
+      sessions.push({ label: data.month, value: data.sessions });
+
       if (arg === data["month"]) {
         organicSource = data.organic_source;
         directSource = data.direct_source;
@@ -57,7 +75,12 @@ export class Dashboard extends Component {
         pageViews = data.page_views;
         users = data.users;
         newUsers = data.new_users;
+        numOfSessionsPerUser = data.number_of_sessions_per_users;
+        pagePerSession = data.page_per_session;
+        avgSessionTime = data.avg_session_time;
+        bounceRate = data.bounce_rate;
 
+        currentMonth = data["month"];
         sourceArr.push(
           {
             label: "Organic Source",
@@ -73,15 +96,14 @@ export class Dashboard extends Component {
           }
         );
 
-        usersArr.push(
+        sessionDataArr.push(
           {
-            label: "Users",
-            value: users,
+            label: "Sessions per user",
+            value: numOfSessionsPerUser,
           },
-          {
-            label: "New Users",
-            value: newUsers,
-          }
+          { label: "Page per session", value: pagePerSession },
+          { label: "Average Session Time", value: avgSessionTime },
+          { label: "Bounce Rate", value: bounceRate }
         );
       }
     });
@@ -97,18 +119,24 @@ export class Dashboard extends Component {
         newUsers,
         sourceArr,
         usersArr,
+        currentMonth,
+        sessions,
+
+        numOfSessionsPerUser,
+        pagePerSession,
+        avgSessionTime,
+        bounceRate,
+        sessionDataArr,
       },
       () => {
-        console.log(this.state.directSource);
+        console.log(this.state.sessionDataArr);
       }
     );
   };
 
   updateDashboard = (event) => {
     this.getData(event.value);
-    this.setState({ selectedValue: event.value }, () =>
-      console.log(this.state.newUsers)
-    );
+    this.setState({ selectedValue: event.value });
   };
 
   componentDidMount() {
@@ -126,6 +154,7 @@ export class Dashboard extends Component {
           }
           rows.push(rowObject);
         }
+
         // dropdown options
         let dropdownOptions = [];
 
@@ -146,14 +175,22 @@ export class Dashboard extends Component {
   }
 
   render() {
+    let { isLight } = this.props;
+
     return (
-      <div>
+      <div className="py-2">
         <Container>
           <Row>
             <Col>
-              <h2>Dashboard</h2>
+              <h2
+                className={`font-weight-bold ${
+                  isLight ? "text-dark" : "text-light"
+                }`}
+              >
+                Dashboard
+              </h2>
             </Col>
-            <Col>
+            <Col xs={3}>
               <Dropdown
                 options={this.state.dropdownOptions}
                 onChange={this.updateDashboard}
@@ -164,22 +201,89 @@ export class Dashboard extends Component {
           </Row>
         </Container>
         <Container>
-          <Row>
-            <Col>
-              <TextWidget title="text" value={this.state.newUsers} />
+          <Row className="my-2">
+            <Col xs={5} md={3}>
+              <TextWidget
+                title="new users"
+                isLight={isLight}
+                value={this.state.newUsers}
+              />
             </Col>
-            <Col>
-              <TextWidget title="text" value={this.state.referralSource} />
+            <Col xs={6} md={3}>
+              <TextWidget
+                title="referral source"
+                isLight={isLight}
+                value={this.state.referralSource}
+              />
             </Col>
-            <Col>
-              <TextWidget title="text" value={this.state.users} />
-            </Col>
-            <Col>
-              <TextWidget title="text" value={this.state.users} />
+            <Col xs={12} md={6}>
+              <DoughnutWidget
+                title="New Users by Date"
+                isLight={isLight}
+                data={this.state.usersArr}
+              />
             </Col>
           </Row>
-          <BarWidget title="Source Data" data={this.state.sourceArr} />
-          <DoughnutWidget title="Users Data" data={this.state.usersArr} />
+          <Row className="my-2">
+            <Col xs={6}>
+              <BarWidget
+                x="Sources"
+                y="Total Number"
+                title="Source Data"
+                isLight={isLight}
+                data={this.state.sourceArr}
+              />
+            </Col>
+            <Col>
+              <TextWidget
+                title="Users"
+                isLight={isLight}
+                value={this.state.users}
+              />
+            </Col>
+            <Col>
+              <TextWidget
+                title="Organic Source"
+                isLight={isLight}
+                value={this.state.organicSource}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={6}>
+              <SplineWidget
+                title="New Users"
+                isLight={isLight}
+                data={this.state.usersArr}
+              />
+            </Col>
+            <Col>
+              <SimpleDataWidget
+                isLight={isLight}
+                date={this.state.currentMonth}
+                completeData={this.state}
+              />
+            </Col>
+          </Row>
+          <div className="my-2"></div>
+          <Row>
+            <Col xs={12} md={6}>
+              <PieWidget
+                title="Total Sessions"
+                isLight={isLight}
+                date={this.state.currentMonth}
+                data={this.state.sessions}
+              />
+            </Col>
+            <Col xs={12} md={6}>
+              <FunnelWidget
+                title="Sessions Info"
+                isLight={isLight}
+                date={this.state.currentMonth}
+                data={this.state.sessionDataArr}
+              />
+            </Col>
+          </Row>
         </Container>
       </div>
     );
