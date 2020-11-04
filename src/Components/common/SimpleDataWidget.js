@@ -18,10 +18,10 @@ function SimpleDataWidget(props) {
       />
 
       <WidgetData
-        title="Users"
+        title="Sessions per page"
         isLight={props.isLight}
         date={props.date}
-        pageViews={props.completeData.users}
+        pageViews={props.completeData.pagePerSession}
       />
     </div>
   );

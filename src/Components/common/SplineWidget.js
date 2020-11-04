@@ -16,7 +16,7 @@ function SplineWidget(props) {
     title: props.title,
     type: "spline", // The chart type
     width: "100%", // Width of the chart
-    height: "210", // Height of the chart
+    height: "230", // Height of the chart
     dataFormat: "json", // Data type
     dataSource: {
       // Chart Configuration

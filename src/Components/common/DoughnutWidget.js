@@ -10,13 +10,14 @@ ReactFC.fcRoot(FusionCharts, Column2D, FusionTheme);
 
 function DoughnutWidget(props) {
   let bgColor = props.isLight ? "#fafafa" : "#2a2a2a";
+  let fontColor = props.isLight ? "#2a2a2a" : "#fafafa";
 
   // Create a JSON object to store the chart configurations
   const chartConfigs = {
     title: props.title,
     type: "doughnut2d", // The chart type
     width: "100%", // Width of the chart
-    height: "200", // Height of the chart
+    height: "210", // Height of the chart
     dataFormat: "json", // Data type
     dataSource: {
       // Chart Configuration
