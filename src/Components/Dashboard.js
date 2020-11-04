@@ -202,21 +202,21 @@ export class Dashboard extends Component {
         </Container>
         <Container>
           <Row className="my-2">
-            <Col xs={5} md={3}>
+            <Col xs={12} lg={3}>
               <TextWidget
                 title="new users"
                 isLight={isLight}
                 value={this.state.newUsers}
               />
             </Col>
-            <Col xs={6} md={3}>
+            <Col xs={12} lg={3}>
               <TextWidget
                 title="referral source"
                 isLight={isLight}
                 value={this.state.referralSource}
               />
             </Col>
-            <Col xs={12} md={6}>
+            <Col xs={12} lg={6}>
               <DoughnutWidget
                 title="New Users by Date"
                 isLight={isLight}
@@ -225,7 +225,7 @@ export class Dashboard extends Component {
             </Col>
           </Row>
           <Row className="my-2">
-            <Col xs={6}>
+            <Col xs={12} lg={6}>
               <BarWidget
                 x="Sources"
                 y="Total Number"
@@ -234,14 +234,14 @@ export class Dashboard extends Component {
                 data={this.state.sourceArr}
               />
             </Col>
-            <Col>
+            <Col xs={12} md={6} lg={3}>
               <TextWidget
                 title="Users"
                 isLight={isLight}
                 value={this.state.users}
               />
             </Col>
-            <Col>
+            <Col xs={12} md={6} lg={3}>
               <TextWidget
                 title="Organic Source"
                 isLight={isLight}
@@ -249,8 +249,8 @@ export class Dashboard extends Component {
               />
             </Col>
           </Row>
-          <Row>
-            <Col xs={6}>
+          <Row className="my-2">
+            <Col xs={21} lg={6}>
               <SplineWidget
                 title="New Users"
                 isLight={isLight}
