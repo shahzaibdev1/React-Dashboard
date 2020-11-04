@@ -109,29 +109,24 @@ export class Dashboard extends Component {
     });
 
     selectedValue = arg;
-    this.setState(
-      {
-        organicSource,
-        directSource,
-        referralSource,
-        pageViews,
-        users,
-        newUsers,
-        sourceArr,
-        usersArr,
-        currentMonth,
-        sessions,
+    this.setState({
+      organicSource,
+      directSource,
+      referralSource,
+      pageViews,
+      users,
+      newUsers,
+      sourceArr,
+      usersArr,
+      currentMonth,
+      sessions,
 
-        numOfSessionsPerUser,
-        pagePerSession,
-        avgSessionTime,
-        bounceRate,
-        sessionDataArr,
-      },
-      () => {
-        console.log(this.state.sessionDataArr);
-      }
-    );
+      numOfSessionsPerUser,
+      pagePerSession,
+      avgSessionTime,
+      bounceRate,
+      sessionDataArr,
+    });
   };
 
   updateDashboard = (event) => {

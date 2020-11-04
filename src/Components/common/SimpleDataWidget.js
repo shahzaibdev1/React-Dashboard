@@ -2,7 +2,6 @@ import React from "react";
 import WidgetData from "./WidgetData";
 
 function SimpleDataWidget(props) {
-  console.log(props.pageViews);
   return (
     <div
       className={`px-2 py-2 h-100 ${

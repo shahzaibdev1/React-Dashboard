@@ -34,9 +34,9 @@ function TextWidget(props) {
 }
 
 TextWidget.propTypes = {
-  title: PropTypes.string.isRequired,
-  value: PropTypes.any.isRequired,
-  isLight: PropTypes.bool.isRequired,
+  title: PropTypes.string,
+  value: PropTypes.any,
+  isLight: PropTypes.bool,
   text: PropTypes.string,
 };
 
